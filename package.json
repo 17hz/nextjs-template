@@ -13,9 +13,13 @@
   "dependencies": {
     "@tanstack/react-query": "^5.90.7",
     "@tanstack/react-query-devtools": "^5.90.2",
+    "nanoid": "^5.1.6",
     "next": "16.0.1",
+    "nuqs": "^2.7.2",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "uuid": "^13.0.0",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.5.0",
