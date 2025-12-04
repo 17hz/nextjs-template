@@ -6,6 +6,13 @@ export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
+  /**
+   * Database joins is useful when Better-Auth needs to fetch related data from multiple tables in a single query.
+   * Endpoints like /get-session, /get-full-organization and many others benefit greatly from this feature,
+   * seeing upwards of 2x to 3x performance improvements depending on database latency.
+   * Ref: https://www.better-auth.com/docs/adapters/drizzle#joins-experimental
+   */
+  experimental: { joins: true },
   emailAndPassword: {
     enabled: true,
   },
