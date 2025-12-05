@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
-import QueryProvider from "../layout/query-provider";
+import QueryProvider from "@/layout/query-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
