@@ -29,7 +29,7 @@ export function SignupForm({
               </div>
               <span className="sr-only">Acme Inc.</span>
             </a>
-            <h1 className="text-xl font-bold">Welcome to Acme Inc.</h1>
+            <h1 className="text-xl font-bold">Join us today</h1>
             <FieldDescription>
               Already have an account? <a href="/signin">Sign in</a>
             </FieldDescription>
@@ -39,7 +39,7 @@ export function SignupForm({
             <Input
               id="email"
               type="email"
-              placeholder="m@example.com"
+              placeholder="name@example.com"
               required
             />
           </Field>
@@ -47,7 +47,7 @@ export function SignupForm({
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input id="password" type="password" required />
             <FieldDescription>
-              Must be at least 8 characters long.
+              At least 8 characters strong.
             </FieldDescription>
           </Field>
           <Field>
@@ -55,10 +55,10 @@ export function SignupForm({
               Confirm Password
             </FieldLabel>
             <Input id="confirm-password" type="password" required />
-            <FieldDescription>Please confirm your password.</FieldDescription>
+            <FieldDescription>Just to be sure.</FieldDescription>
           </Field>
           <Field>
-            <Button type="submit">Create Account</Button>
+            <Button type="submit">Sign Up</Button>
           </Field>
           <FieldSeparator>Or</FieldSeparator>
           <Field className="grid gap-4 sm:grid-cols-2">

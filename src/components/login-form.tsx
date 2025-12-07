@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { GalleryVerticalEnd } from "lucide-react"
+import { GalleryVerticalEnd, AlertCircle } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { signIn } from "@/lib/auth-client"
 
 export function LoginForm({
@@ -68,20 +69,24 @@ export function LoginForm({
               </div>
               <span className="sr-only">Acme Inc.</span>
             </a>
-            <h1 className="text-xl font-bold">Welcome to Acme Inc.</h1>
+            <h1 className="text-xl font-bold">Welcome back, ready to code?</h1>
             <FieldDescription>
               Don&apos;t have an account? <a href="/signup">Sign up</a>
             </FieldDescription>
           </div>
           {error && (
-            <p className="text-center text-sm text-destructive">{error}</p>
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
           )}
           <Field>
             <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
               id="email"
               type="email"
-              placeholder="m@example.com"
+              placeholder="name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
@@ -101,7 +106,7 @@ export function LoginForm({
           </Field>
           <Field>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Login"}
+              {isLoading ? "Logging in..." : "Sign In"}
             </Button>
           </Field>
           <FieldSeparator>Or</FieldSeparator>
