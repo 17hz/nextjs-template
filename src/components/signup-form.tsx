@@ -31,7 +31,7 @@ export function SignupForm({
             </a>
             <h1 className="text-xl font-bold">Welcome to Acme Inc.</h1>
             <FieldDescription>
-              Already have an account? <a href="#">Sign in</a>
+              Already have an account? <a href="/signin">Sign in</a>
             </FieldDescription>
           </div>
           <Field>

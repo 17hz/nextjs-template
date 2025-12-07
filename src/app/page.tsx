@@ -35,16 +35,16 @@ export default function Home() {
           ) : (
             <div className="flex gap-4">
               <Link
-                href="/login"
+                href="/signin"
                 className="border border-white px-4 py-2 font-mono text-sm transition-colors duration-200 hover:bg-white hover:text-black"
               >
-                LOGIN
+                SIGNIN
               </Link>
               <Link
-                href="/register"
+                href="/signup"
                 className="bg-white px-4 py-2 font-mono text-sm font-bold text-black transition-colors duration-200 hover:bg-gray-200"
               >
-                REGISTER
+                SIGNUP
               </Link>
             </div>
           )}
@@ -85,13 +85,13 @@ export default function Home() {
           ) : (
             <div className="flex justify-center gap-4">
               <Link
-                href="/login"
+                href="/signin"
                 className="border-2 border-white px-8 py-4 font-mono text-sm transition-all duration-200 hover:bg-white hover:text-black"
               >
                 SIGN IN TO CONTINUE
               </Link>
               <Link
-                href="/register"
+                href="/signup"
                 className="bg-white px-8 py-4 font-mono text-sm font-bold text-black transition-all duration-200 hover:bg-gray-200"
               >
                 CREATE NEW ACCOUNT
