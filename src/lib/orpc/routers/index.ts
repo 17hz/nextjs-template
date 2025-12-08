@@ -69,7 +69,7 @@ export const findPlanet = base
 
 export const createPlanet = authorized
   .input(PlanetSchema.omit({ id: true }))
-  .handler(async ({ input,  context }) => {
+  .handler(async ({ input }) => {
     const newPlanet: Planet = {
       id: nextId++,
       ...input,
