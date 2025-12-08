@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useSession } from "@/lib/auth-client";
-import { User } from "lucide-react";
+import { useSession, signOut } from "@/lib/auth-client";
+import { User, LogOut } from "lucide-react";
 
 function SiteHeader() {
   const { data: session } = useSession();
@@ -32,14 +32,24 @@ function SiteHeader() {
         </div>
         <div className="flex items-center gap-4">
           {session ? (
-            <Link href="/dashboard">
-              <Button variant="ghost" className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black">
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-100">
-                  <User className="h-3 w-3" />
-                </div>
-                {session.user.name || "Dashboard"}
+            <>
+              <Link href="/dashboard">
+                <Button variant="ghost" className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-100">
+                    <User className="h-3 w-3" />
+                  </div>
+                  {session.user.name || "Dashboard"}
+                </Button>
+              </Link>
+              <Button
+                variant="ghost"
+                className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black"
+                onClick={() => signOut({ fetchOptions: { onSuccess: () => window.location.reload() } })}
+              >
+                <LogOut className="h-4 w-4" />
+                Sign Out
               </Button>
-            </Link>
+            </>
           ) : (
             <>
               <Link href="/signin" className="text-sm font-medium text-gray-500 transition-colors hover:text-black">

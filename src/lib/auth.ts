@@ -1,6 +1,8 @@
 import { betterAuth } from "better-auth/minimal";
+import { emailOTP } from "better-auth/plugins"
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import  db  from "@/database/db";
+import { sendVerificationEmail } from "@/lib/email";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -22,4 +24,11 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     },
   },
+  plugins: [
+    emailOTP({ 
+      async sendVerificationOTP({ email, otp, type }) { 
+        await sendVerificationEmail({ to: email, otp, type })
+      }, 
+    }) 
+  ]
 });
