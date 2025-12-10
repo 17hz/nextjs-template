@@ -15,5 +15,9 @@ export const {
   signUp,
   signOut,
   useSession,
-  emailOtp
+  emailOtp,
+  updateUser,
+  changePassword,
+  changeEmail,
+  deleteUser,
 } = authClient

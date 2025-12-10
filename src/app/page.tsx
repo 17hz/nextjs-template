@@ -4,6 +4,15 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useSession, signOut } from "@/lib/auth-client";
 import { User, LogOut } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarImage, AvatarFallback, getInitials } from "@/components/ui/avatar";
 
 function SiteHeader() {
   const { data: session } = useSession();
@@ -32,24 +41,39 @@ function SiteHeader() {
         </div>
         <div className="flex items-center gap-4">
           {session ? (
-            <>
-              <Link href="/dashboard">
-                <Button variant="ghost" className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-100">
-                    <User className="h-3 w-3" />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-black/5">
+                  <Avatar size="sm">
+                    <AvatarImage src={session.user.image || undefined} alt={session.user.name || "Avatar"} />
+                    <AvatarFallback className="bg-gradient-to-br from-violet-500 to-purple-600 text-xs text-white">
+                      {getInitials(session.user.name || "U")}
+                    </AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium">{session.user.name}</p>
+                    <p className="text-xs text-muted-foreground">{session.user.email}</p>
                   </div>
-                  {session.user.name || "Dashboard"}
-                </Button>
-              </Link>
-              <Button
-                variant="ghost"
-                className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black"
-                onClick={() => signOut({ fetchOptions: { onSuccess: () => window.location.reload() } })}
-              >
-                <LogOut className="h-4 w-4" />
-                Sign Out
-              </Button>
-            </>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => window.location.href = "/dashboard"}>
+                  <User className="mr-2 h-4 w-4" />
+                  Dashboard
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="text-destructive focus:text-destructive"
+                  onClick={() => signOut({ fetchOptions: { onSuccess: () => window.location.reload() } })}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <>
               <Link href="/signin" className="text-sm font-medium text-gray-500 transition-colors hover:text-black">
