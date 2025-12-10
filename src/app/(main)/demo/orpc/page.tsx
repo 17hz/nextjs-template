@@ -10,16 +10,16 @@ export default function OrpcDemoPage() {
   const [description, setDescription] = useState("");
 
   const planetsQuery = useQuery(
-    orpc.listPlanet.queryOptions({
+    orpc.planet.listPlanet.queryOptions({
       input: { limit: 10 },
     })
   );
 
   const createMutation = useMutation({
-    ...orpc.createPlanet.mutationOptions(),
+    ...orpc.planet.createPlanet.mutationOptions(),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: orpc.listPlanet.queryKey({ input: { limit: 10 } }),
+        queryKey: orpc.planet.listPlanet.queryKey({ input: { limit: 10 } }),
       });
       setName("");
       setDescription("");

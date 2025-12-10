@@ -1,6 +1,6 @@
 import { RPCHandler } from "@orpc/server/fetch";
 import { onError } from "@orpc/server";
-import { router } from "@/lib/orpc/routers";
+import { router } from "@/server/routers";
 
 const handler = new RPCHandler(router, {
   interceptors: [

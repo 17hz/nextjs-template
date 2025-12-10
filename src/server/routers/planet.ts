@@ -1,31 +1,6 @@
 import * as z from "zod";
-import {  ORPCError, os } from '@orpc/server'
-import { auth } from "@/lib/auth";
-
-
-export const base = os.$context<{ headers: Headers }>()
-
-
-export const authMiddleware = base.middleware(async ({ context, next }) => {
-  const sessionData = await auth.api.getSession({
-    headers: context.headers, // or reqHeaders if you're using the plugin
-  })
-
-  if (!sessionData?.session || !sessionData?.user) {
-    throw new ORPCError('UNAUTHORIZED')
-  }
-
-  // Adds session and user to the context
-  return next({
-    context: {
-      session: sessionData.session,
-      user: sessionData.user
-    },
-  })
-})
-
-
-export const authorized = base.use(authMiddleware)
+import { base } from "../builders/base";
+import { authorized} from "../builders/authorized";
  
 const PlanetSchema = z.object({
   id: z.number().int().min(1),
@@ -77,9 +52,3 @@ export const createPlanet = authorized
     planets.push(newPlanet);
     return newPlanet;
   });
-
-export const router = {
-  listPlanet,
-  findPlanet,
-  createPlanet
-}
