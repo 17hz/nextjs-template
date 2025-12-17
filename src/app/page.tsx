@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarImage, AvatarFallback, getInitials } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 function SiteHeader() {
   const { data: session } = useSession();
@@ -47,7 +47,7 @@ function SiteHeader() {
                   <Avatar size="sm">
                     <AvatarImage src={session.user.image || undefined} alt={session.user.name || "Avatar"} />
                     <AvatarFallback className="bg-gradient-to-br from-violet-500 to-purple-600 text-xs text-white">
-                      {getInitials(session.user.name || "U")}
+                      {/* {getInitials(session.user.name || "U")} */}
                     </AvatarFallback>
                   </Avatar>
                 </button>

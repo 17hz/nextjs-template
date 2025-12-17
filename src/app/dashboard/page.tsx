@@ -24,7 +24,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Avatar, AvatarImage, AvatarFallback, getInitials } from "@/components/ui/avatar"
+import { Avatar, AvatarImage, AvatarFallback  } from "@/components/ui/avatar"
 import {
   useSession,
   updateUser,
@@ -114,7 +114,7 @@ function ProfilePanel() {
             <Avatar size="xl" className="shadow-xl ring-4 ring-background">
               <AvatarImage src={session?.user?.image || undefined} alt={session?.user?.name || "Avatar"} />
               <AvatarFallback className="bg-gradient-to-br from-violet-500 to-purple-600 text-white">
-                {getInitials(session?.user?.name || "U")}
+                {/* {getInitials(session?.user?.name || "U")} */}
               </AvatarFallback>
             </Avatar>
             <button
