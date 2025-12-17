@@ -1,3 +1,9 @@
+## Package Management
+
+- Use `pnpm` as the primary package manager for dependency management
+- Use `bun` to run npm scripts
+- Use `bunx` to run executable npm packages
+
 ## TypeScript
 
 - Only create an abstraction if it’s actually needed
@@ -6,6 +12,8 @@
 - Use `knip` to remove unused code if making large changes
 - The `gh` CLI is installed, use it
 - Don’t use emojis
+- Don’t unnecessarily add `try`/`catch`
+- Don’t cast to `any`
 
 
 ## React
@@ -27,9 +35,3 @@
 - Use next/font   next/script when applicable
 - next/image above the fold should have `sync` / `eager` / use `priority` sparingly
 - Be mindful of serialized prop size for RSC → child components
-
-
-## TypeScript
-
-- Don’t unnecessarily add `try`/`catch`
-- Don’t cast to `any`
