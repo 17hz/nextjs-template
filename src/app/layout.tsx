@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import QueryProvider from "@/layout/query-provider";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,13 +15,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
-        <NuqsAdapter>
-          <QueryProvider>
-            {children}
-          </QueryProvider>
-        </NuqsAdapter>
+        <NextThemesProvider attribute={'class'}>
+          <NuqsAdapter>
+            <QueryProvider>
+              {children}
+            </QueryProvider>
+          </NuqsAdapter>
+        </NextThemesProvider>
       </body>
     </html>
   );
