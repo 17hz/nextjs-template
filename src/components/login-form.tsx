@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { signIn } from "@/lib/auth-client"
+import { Logo } from "./logo"
 
 export function LoginForm({
   className,
@@ -65,7 +66,7 @@ export function LoginForm({
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
-                <GalleryVerticalEnd className="size-6" />
+                <Logo className="text-5xl" />
               </div>
               <span className="sr-only">Acme Inc.</span>
             </a>
