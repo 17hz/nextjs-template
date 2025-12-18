@@ -8,6 +8,7 @@ import {
   Command,
   Frame,
   GalleryVerticalEnd,
+  Images,
   Map,
   PieChart,
   Settings2,
@@ -21,20 +22,19 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { useSession } from "@/lib/auth-client"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 // This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
       name: "Acme Inc",
@@ -159,6 +159,10 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { isPending } = useSession()
+  const pathname = usePathname()
+
+  if(isPending) return null
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -179,11 +183,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        <SidebarGroup>
+          <Link href={'/images'} >
+            <SidebarMenuButton isActive={pathname === '/images'}>
+              <Images />
+              <span>图片</span>
+            </SidebarMenuButton>
+          </Link>
+        </SidebarGroup>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser/>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
