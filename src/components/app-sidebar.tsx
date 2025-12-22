@@ -29,7 +29,6 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { useSession } from "@/lib/auth-client"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -159,10 +158,7 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { isPending } = useSession()
   const pathname = usePathname()
-
-  if(isPending) return null
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

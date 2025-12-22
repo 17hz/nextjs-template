@@ -2,6 +2,7 @@ import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { auth } from "@/lib/auth"
 import { AppSidebar } from "@/components/app-sidebar"
+import { SessionGuard } from "@/components/session-guard"
 import {
   SidebarInset,
   SidebarProvider,
@@ -22,12 +23,14 @@ export default async function MainLayout({
 
   return (
     <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          {children}
-        </div>
-      </SidebarInset>
+      <SessionGuard>
+        <AppSidebar />
+        <SidebarInset>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+            {children}
+          </div>
+        </SidebarInset>
+      </SessionGuard>
     </SidebarProvider>
   )
 }
