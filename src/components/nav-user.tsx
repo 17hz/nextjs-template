@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/sidebar"
 import { authClient, useSession } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
+import { getGravatarUrl } from "@/lib/gravatar"
 
 export function NavUser() {
   const router = useRouter()
@@ -40,6 +41,7 @@ export function NavUser() {
   if(!session) return null
 
   const user = session.user
+  const avatarUrl = user.image ?? getGravatarUrl(user.email)
 
 
   const signOut = async ()=>{
@@ -57,7 +59,7 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user?.image ?? undefined} alt={user.name} />
+                <AvatarImage src={avatarUrl} alt={user.name} />
                 <AvatarFallback className="rounded-lg">
                   {user?.name?.slice(0, 2).toUpperCase()}
                 </AvatarFallback>
@@ -78,7 +80,7 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.image ?? undefined} alt={user.name} />
+                  <AvatarImage src={avatarUrl} alt={user.name} />
                   <AvatarFallback className="rounded-lg"> 
                     {user?.name?.slice(0, 2).toUpperCase()}
                   </AvatarFallback>
