@@ -17,7 +17,7 @@
     "@neondatabase/serverless": "^1.0.2",
     "@orpc/client": "^1.12.3",
     "@orpc/openapi": "^1.12.3",
-    "@orpc/openapi-client": "^1.12.3",
+    "@orpc/openapi-client": "^1.13.0",
     "@orpc/server": "^1.12.3",
     "@orpc/tanstack-query": "^1.12.3",
     "@radix-ui/react-avatar": "^1.1.11",
