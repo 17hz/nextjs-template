@@ -111,7 +111,7 @@ function ProfilePanel() {
       <div className="space-y-6">
         <div className="flex items-center gap-6">
           <div className="group relative">
-            <Avatar size="xl" className="shadow-xl ring-4 ring-background">
+            <Avatar className="shadow-xl ring-4 ring-background">
               <AvatarImage src={session?.user?.image || undefined} alt={session?.user?.name || "Avatar"} />
               <AvatarFallback className="bg-gradient-to-br from-violet-500 to-purple-600 text-white">
                 {/* {getInitials(session?.user?.name || "U")} */}
