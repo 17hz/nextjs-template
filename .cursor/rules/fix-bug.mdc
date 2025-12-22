@@ -1,5 +1,0 @@
----
-alwaysApply: true
----
-
-When fixing a bug, identify the root cause, implement the fix, and verify with linting. End with a simple one-sentence summary using the surfer emoji 🏄‍♂️.
