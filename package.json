@@ -16,7 +16,7 @@
     "@google/genai": "^1.34.0",
     "@neondatabase/serverless": "^1.0.2",
     "@orpc/client": "^1.12.3",
-    "@orpc/openapi": "^1.12.3",
+    "@orpc/openapi": "^1.13.0",
     "@orpc/openapi-client": "^1.12.3",
     "@orpc/server": "^1.12.3",
     "@orpc/tanstack-query": "^1.12.3",
