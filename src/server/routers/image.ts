@@ -11,10 +11,10 @@ const ai = new GoogleGenAI({
 export const generateImage = authorized
   .input(
     z.object({
-      prompt: z.string().min(1, "Prompt is required").max(1000),
+      prompt: z.string().min(1, "Prompt is required").max(5000),
     })
   )
-  .handler(async ({ input }) => {
+  .handler(async ({ input, context }) => {
 
     const tools = [
       {
@@ -61,7 +61,7 @@ export const generateImage = authorized
         
         // Upload to Vercel Blob
         const buffer = Buffer.from(base64, "base64");
-        const { url } = await put(`images/${nanoid()}.${extension}`, buffer, {
+        const { url } = await put(`images/${context.user.id}/${Date.now()}_${nanoid(5)}.${extension}`, buffer, {
           access: "public",
           contentType: mimeType,
         });
