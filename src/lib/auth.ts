@@ -1,12 +1,12 @@
-import { betterAuth } from "better-auth/minimal";
-import { emailOTP } from "better-auth/plugins"
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import  db  from "@/database/db";
-import { sendVerificationEmail } from "@/lib/email";
+import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { betterAuth } from 'better-auth/minimal'
+import { emailOTP } from 'better-auth/plugins'
+import db from '@/database/db'
+import { sendVerificationEmail } from '@/lib/email'
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
-    provider: "pg",
+    provider: 'pg',
   }),
   /**
    * Database joins is useful when Better-Auth needs to fetch related data from multiple tables in a single query.
@@ -34,10 +34,10 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    emailOTP({ 
-      async sendVerificationOTP({ email, otp, type }) { 
+    emailOTP({
+      async sendVerificationOTP({ email, otp, type }) {
         await sendVerificationEmail({ to: email, otp, type })
-      }, 
-    }) 
-  ]
-});
+      },
+    }),
+  ],
+})

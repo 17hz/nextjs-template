@@ -1,26 +1,22 @@
-import { Resend } from "resend"
+import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface SendVerificationEmailParams {
   to: string
   otp: string
-  type: "sign-in" | "email-verification" | "forget-password"
+  type: 'sign-in' | 'email-verification' | 'forget-password'
 }
 
-export async function sendVerificationEmail({
-  to,
-  otp,
-  type,
-}: SendVerificationEmailParams) {
+export async function sendVerificationEmail({ to, otp, type }: SendVerificationEmailParams) {
   const subjects = {
-    "sign-in": "Your sign-in code",
-    "email-verification": "Verify your email",
-    "forget-password": "Reset your password",
+    'sign-in': 'Your sign-in code',
+    'email-verification': 'Verify your email',
+    'forget-password': 'Reset your password',
   }
 
   const { data, error } = await resend.emails.send({
-    from: "Acme <onboarding@resend.dev>",
+    from: 'Acme <onboarding@resend.dev>',
     to,
     subject: subjects[type],
     html: `
@@ -38,8 +34,8 @@ export async function sendVerificationEmail({
   })
 
   if (error) {
-    console.error("Failed to send email:", error)
-    throw new Error("Failed to send verification email")
+    console.error('Failed to send email:', error)
+    throw new Error('Failed to send verification email')
   }
 
   return data

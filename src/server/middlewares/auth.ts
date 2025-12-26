@@ -1,6 +1,6 @@
-import { auth } from "@/lib/auth"
-import { base } from "../builders/base"
-import { ORPCError } from "@orpc/server"
+import { ORPCError } from '@orpc/server'
+import { auth } from '@/lib/auth'
+import { base } from '../builders/base'
 
 export const authMiddleware = base.middleware(async ({ context, next }) => {
   const sessionData = await auth.api.getSession({
@@ -15,7 +15,7 @@ export const authMiddleware = base.middleware(async ({ context, next }) => {
   return next({
     context: {
       session: sessionData.session,
-      user: sessionData.user
+      user: sessionData.user,
     },
   })
 })

@@ -1,7 +1,7 @@
-import type { RouterClient } from "@orpc/server";
-import { createORPCClient } from "@orpc/client";
-import { RPCLink } from "@orpc/client/fetch";
-import { router } from "@/server/routers";
+import { createORPCClient } from '@orpc/client'
+import { RPCLink } from '@orpc/client/fetch'
+import type { RouterClient } from '@orpc/server'
+import type { router } from '@/server/routers'
 
 const link = new RPCLink({
   url: `${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'}/api/rpc`,
@@ -13,7 +13,6 @@ const link = new RPCLink({
     const { headers } = await import('next/headers')
     return await headers()
   },
+})
 
-});
-
-export const client: RouterClient<typeof router> = createORPCClient(link);
+export const client: RouterClient<typeof router> = createORPCClient(link)

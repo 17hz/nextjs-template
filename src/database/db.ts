@@ -1,6 +1,6 @@
-import { drizzle } from 'drizzle-orm/neon-http';
-import * as schema from './schemas';
+import { drizzle } from 'drizzle-orm/neon-http'
+import * as schema from './schemas'
 
-const db = drizzle(process.env.DATABASE_URL!, {schema: schema});
+const db = drizzle(process.env.DATABASE_URL!, { schema: schema })
 
-export default db;
+export default db

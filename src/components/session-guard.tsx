@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useSession } from "@/lib/auth-client"
-import { Loader2 } from "lucide-react"
+import { Loader2 } from 'lucide-react'
+import { useSession } from '@/lib/auth-client'
 
 function FullScreenSpinner() {
   return (

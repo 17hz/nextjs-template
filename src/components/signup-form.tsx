@@ -1,48 +1,44 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { GalleryVerticalEnd, AlertCircle } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { AlertCircle, GalleryVerticalEnd } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { signUp, signIn, emailOtp } from "@/lib/auth-client"
+} from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { emailOtp, signIn, signUp } from '@/lib/auth-client'
+import { cn } from '@/lib/utils'
 
-type Step = "register" | "verify"
+type Step = 'register' | 'verify'
 
-export function SignupForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const [step, setStep] = useState<Step>("register")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [otp, setOtp] = useState("")
+export function SignupForm({ className, ...props }: React.ComponentProps<'div'>) {
+  const [step, setStep] = useState<Step>('register')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [otp, setOtp] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [error, setError] = useState('')
   const router = useRouter()
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError("")
+    setError('')
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match")
+      setError('Passwords do not match')
       return
     }
 
     if (password.length < 8) {
-      setError("Password must be at least 8 characters")
+      setError('Password must be at least 8 characters')
       return
     }
 
@@ -51,33 +47,33 @@ export function SignupForm({
     const result = await signUp.email({
       email,
       password,
-      name: email.split("@")[0],
+      name: email.split('@')[0],
     })
 
     if (result.error) {
-      setError(result.error.message ?? "Registration failed")
+      setError(result.error.message ?? 'Registration failed')
       setIsLoading(false)
       return
     }
 
     const otpResult = await emailOtp.sendVerificationOtp({
       email,
-      type: "email-verification",
+      type: 'email-verification',
     })
 
     if (otpResult.error) {
-      setError(otpResult.error.message ?? "Failed to send verification code")
+      setError(otpResult.error.message ?? 'Failed to send verification code')
       setIsLoading(false)
       return
     }
 
     setIsLoading(false)
-    setStep("verify")
+    setStep('verify')
   }
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError("")
+    setError('')
     setIsLoading(true)
 
     const result = await emailOtp.verifyEmail({
@@ -86,50 +82,47 @@ export function SignupForm({
     })
 
     if (result.error) {
-      setError(result.error.message ?? "Invalid verification code")
+      setError(result.error.message ?? 'Invalid verification code')
       setIsLoading(false)
       return
     }
 
-    router.push("/")
+    router.push('/')
   }
 
   const handleResendOtp = async () => {
-    setError("")
+    setError('')
     setIsLoading(true)
 
     const result = await emailOtp.sendVerificationOtp({
       email,
-      type: "email-verification",
+      type: 'email-verification',
     })
 
     if (result.error) {
-      setError(result.error.message ?? "Failed to resend verification code")
+      setError(result.error.message ?? 'Failed to resend verification code')
     }
 
     setIsLoading(false)
   }
 
   const handleGoogleSignup = async () => {
-    await signIn.social({ provider: "google", callbackURL: "/" })
+    await signIn.social({ provider: 'google', callbackURL: '/' })
   }
 
-  if (step === "verify") {
+  if (step === 'verify') {
     return (
-      <div className={cn("flex flex-col gap-6", className)} {...props}>
+      <div className={cn('flex flex-col gap-6', className)} {...props}>
         <form onSubmit={handleVerify}>
           <FieldGroup>
             <div className="flex flex-col items-center gap-2 text-center">
-              <a
-                href="#"
-                className="flex flex-col items-center gap-2 font-medium"
-              >
+              <a href="#" className="flex flex-col items-center gap-2 font-medium">
                 <div className="flex size-8 items-center justify-center rounded-md">
                   <GalleryVerticalEnd className="size-6" />
                 </div>
                 <span className="sr-only">Acme Inc.</span>
               </a>
-              <h1 className="text-xl font-bold">Verify your email</h1>
+              <h1 className="font-bold text-xl">Verify your email</h1>
               <FieldDescription>
                 We sent a verification code to <strong>{email}</strong>
               </FieldDescription>
@@ -153,22 +146,15 @@ export function SignupForm({
                 maxLength={6}
                 required
               />
-              <FieldDescription>
-                Enter the 6-digit code from your email
-              </FieldDescription>
+              <FieldDescription>Enter the 6-digit code from your email</FieldDescription>
             </Field>
             <Field>
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Verifying..." : "Verify Email"}
+                {isLoading ? 'Verifying...' : 'Verify Email'}
               </Button>
             </Field>
             <Field>
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={handleResendOtp}
-                disabled={isLoading}
-              >
+              <Button type="button" variant="ghost" onClick={handleResendOtp} disabled={isLoading}>
                 Resend Code
               </Button>
             </Field>
@@ -179,20 +165,17 @@ export function SignupForm({
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
       <form onSubmit={handleRegister}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
-            <a
-              href="#"
-              className="flex flex-col items-center gap-2 font-medium"
-            >
+            <a href="#" className="flex flex-col items-center gap-2 font-medium">
               <div className="flex size-8 items-center justify-center rounded-md">
                 <GalleryVerticalEnd className="size-6" />
               </div>
               <span className="sr-only">Acme Inc.</span>
             </a>
-            <h1 className="text-xl font-bold">Join us today</h1>
+            <h1 className="font-bold text-xl">Join us today</h1>
             <FieldDescription>
               Already have an account? <a href="/signin">Sign in</a>
             </FieldDescription>
@@ -229,9 +212,7 @@ export function SignupForm({
             <FieldDescription>At least 8 characters strong.</FieldDescription>
           </Field>
           <Field>
-            <FieldLabel htmlFor="confirm-password">
-              Confirm Password
-            </FieldLabel>
+            <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
             <Input
               id="confirm-password"
               type="password"
@@ -244,7 +225,7 @@ export function SignupForm({
           </Field>
           <Field>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Creating account..." : "Sign Up"}
+              {isLoading ? 'Creating account...' : 'Sign Up'}
             </Button>
           </Field>
           <FieldSeparator>Or</FieldSeparator>
@@ -262,8 +243,8 @@ export function SignupForm({
         </FieldGroup>
       </form>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
+        <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
   )

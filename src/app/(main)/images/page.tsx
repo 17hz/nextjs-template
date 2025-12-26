@@ -1,45 +1,43 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { client } from "@/lib/orpc/client";
-import { Loader2, Sparkles, Image as ImageIcon, Download, Maximize2, X } from "lucide-react";
+import { Download, Image as ImageIcon, Loader2, Maximize2, Sparkles, X } from 'lucide-react'
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
-  DialogContent,
-  DialogTrigger,
   DialogClose,
+  DialogContent,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { client } from '@/lib/orpc/client'
+import { cn } from '@/lib/utils'
 
 export default function ImagesPage() {
-  const [prompt, setPrompt] = useState("");
-  const [images, setImages] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [prompt, setPrompt] = useState('')
+  const [images, setImages] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   async function handleGenerate() {
-    if (!prompt.trim()) return;
+    if (!prompt.trim()) return
 
-    setIsLoading(true);
-    setError(null);
+    setIsLoading(true)
+    setError(null)
     // Optional: Clear images to show loading state for new generation specifically or keep history.
     // Let's clear for now to focus on the 'generating' experience.
-    setImages([]); 
+    setImages([])
 
     try {
-      const result = await client.image.generateImage({ prompt });
-      setImages(result.images);
+      const result = await client.image.generateImage({ prompt })
+      setImages(result.images)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to generate image");
+      setError(err instanceof Error ? err.message : 'Failed to generate image')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
-
-
 
   return (
     <div className="flex h-full flex-col bg-background">
@@ -52,27 +50,30 @@ export default function ImagesPage() {
                 {/* Animated gradient background */}
                 <div className="relative aspect-square overflow-hidden rounded-3xl bg-linear-to-br from-violet-500/20 via-fuchsia-500/20 to-cyan-500/20">
                   {/* Animated shimmer overlay */}
-                  <div 
+                  <div
                     className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent"
                     style={{
-                      animation: "shimmer 2s infinite",
+                      animation: 'shimmer 2s infinite',
                     }}
                   />
-                  
+
                   {/* Center icon with pulse */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="relative">
                       {/* Outer ring */}
-                      <div className="absolute -inset-8 animate-ping rounded-full border-2 border-primary/30" style={{ animationDuration: "2s" }} />
+                      <div
+                        className="absolute -inset-8 animate-ping rounded-full border-2 border-primary/30"
+                        style={{ animationDuration: '2s' }}
+                      />
                       <div className="absolute -inset-4 animate-pulse rounded-full border border-primary/50" />
-                      
+
                       {/* Inner content */}
                       <div className="relative flex size-20 items-center justify-center rounded-2xl bg-background/80 shadow-xl backdrop-blur-sm">
                         <Sparkles className="size-8 animate-pulse text-primary" />
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Floating dots animation */}
                   <div className="absolute inset-0">
                     {[...Array(6)].map((_, i) => (
@@ -89,21 +90,21 @@ export default function ImagesPage() {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="mt-6 text-center">
-                  <p 
-                    className="inline-block bg-linear-to-r from-primary/30 via-primary to-primary/30 bg-size-[300%_100%] bg-clip-text text-lg font-medium text-transparent"
-                    style={{ 
-                      animation: "text-shimmer 3s ease-in-out infinite alternate",
-                      WebkitBackgroundClip: "text",
+                  <p
+                    className="inline-block bg-linear-to-r bg-size-[300%_100%] from-primary/30 via-primary to-primary/30 bg-clip-text font-medium text-lg text-transparent"
+                    style={{
+                      animation: 'text-shimmer 3s ease-in-out infinite alternate',
+                      WebkitBackgroundClip: 'text',
                     }}
                   >
                     Creating your masterpiece
                   </p>
-                  <p className="mt-1 text-sm text-muted-foreground">This may take a moment...</p>
+                  <p className="mt-1 text-muted-foreground text-sm">This may take a moment...</p>
                 </div>
               </div>
-              
+
               {/* CSS animations */}
               <style jsx>{`
                 @keyframes shimmer {
@@ -137,7 +138,7 @@ export default function ImagesPage() {
                         />
                       </div>
                     </DialogTrigger>
-                    
+
                     {/* Hover Overlay Actions */}
                     <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-linear-to-t from-black/70 to-transparent p-4 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                       <Button
@@ -147,11 +148,16 @@ export default function ImagesPage() {
                         asChild
                         title="Save Image"
                       >
-                        <a href={`${src}${src.includes("?") ? "&" : "?"}download=1`} download={`generated-image-${index + 1}`} target="_blank" onClick={(e) => e.stopPropagation()}>
+                        <a
+                          href={`${src}${src.includes('?') ? '&' : '?'}download=1`}
+                          download={`generated-image-${index + 1}`}
+                          target="_blank"
+                          onClick={(e) => e.stopPropagation()}
+                        >
                           <Download className="h-4 w-4" />
                         </a>
                       </Button>
-                      
+
                       <DialogTrigger asChild>
                         <Button
                           size="icon"
@@ -164,7 +170,10 @@ export default function ImagesPage() {
                       </DialogTrigger>
                     </div>
 
-                    <DialogContent showCloseButton={false} className="pointer-events-none max-w-[95vw] border-none bg-transparent p-0 shadow-none sm:max-w-[90vw]">
+                    <DialogContent
+                      showCloseButton={false}
+                      className="pointer-events-none max-w-[95vw] border-none bg-transparent p-0 shadow-none sm:max-w-[90vw]"
+                    >
                       <div className="relative flex items-center justify-center">
                         <DialogTitle className="sr-only">View Image</DialogTitle>
                         {/* Action buttons */}
@@ -176,7 +185,11 @@ export default function ImagesPage() {
                             asChild
                             title="Download Image"
                           >
-                            <a href={`${src}${src.includes("?") ? "&" : "?"}download=1`} download={`generated-image-${index + 1}`} target="_blank">
+                            <a
+                              href={`${src}${src.includes('?') ? '&' : '?'}download=1`}
+                              download={`generated-image-${index + 1}`}
+                              target="_blank"
+                            >
                               <Download className="h-5 w-5" />
                             </a>
                           </Button>
@@ -203,14 +216,14 @@ export default function ImagesPage() {
               ))}
             </div>
           ) : (
-            <div className="flex h-full min-h-[50vh] animate-in flex-col items-center justify-center text-center text-muted-foreground duration-500 fade-in zoom-in">
+            <div className="fade-in zoom-in flex h-full min-h-[50vh] animate-in flex-col items-center justify-center text-center text-muted-foreground duration-500">
               <div className="relative mb-6">
                 <div className="absolute inset-0 animate-pulse rounded-full bg-primary/20 blur-xl" />
                 <div className="relative flex size-24 items-center justify-center rounded-3xl bg-muted/50 backdrop-blur-sm">
                   <ImageIcon className="size-10 opacity-50" />
                 </div>
               </div>
-              <h3 className="mb-2 text-xl font-semibold text-foreground">Ready to Create</h3>
+              <h3 className="mb-2 font-semibold text-foreground text-xl">Ready to Create</h3>
               <p className="max-w-sm text-sm">
                 Enter a descriptive prompt below to generate unique AI artwork instantly.
               </p>
@@ -231,8 +244,8 @@ export default function ImagesPage() {
         <div className="mx-auto max-w-3xl">
           <form
             onSubmit={(e) => {
-              e.preventDefault();
-              handleGenerate();
+              e.preventDefault()
+              handleGenerate()
             }}
             className="flex gap-3"
           >
@@ -247,7 +260,10 @@ export default function ImagesPage() {
               type="submit"
               disabled={isLoading || !prompt.trim()}
               size="lg"
-              className={cn("h-12 rounded-full px-8 font-medium transition-all", isLoading ? "w-32" : "w-auto")}
+              className={cn(
+                'h-12 rounded-full px-8 font-medium transition-all',
+                isLoading ? 'w-32' : 'w-auto',
+              )}
             >
               {isLoading ? (
                 <>
@@ -265,5 +281,5 @@ export default function ImagesPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

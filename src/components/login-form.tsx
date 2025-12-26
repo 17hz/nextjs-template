@@ -1,76 +1,69 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { GalleryVerticalEnd, AlertCircle } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { AlertCircle } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { signIn } from "@/lib/auth-client"
-import { Logo } from "./logo"
+} from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { signIn } from '@/lib/auth-client'
+import { cn } from '@/lib/utils'
+import { Logo } from './logo'
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [error, setError] = useState('')
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    setError("")
+    setError('')
 
     try {
       const result = await signIn.email({
         email,
         password,
-        callbackURL: "/",
+        callbackURL: '/',
       })
 
       if (result.data) {
-        router.push("/")
+        router.push('/')
       } else {
-        setError("Invalid email or password")
+        setError('Invalid email or password')
       }
     } catch {
-      setError("Login failed")
+      setError('Login failed')
     } finally {
       setIsLoading(false)
     }
   }
 
   const handleGoogleLogin = async () => {
-    await signIn.social({ provider: "google", callbackURL: "/" })
+    await signIn.social({ provider: 'google', callbackURL: '/' })
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
       <form onSubmit={handleSubmit}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
-            <a
-              href="#"
-              className="flex flex-col items-center gap-2 font-medium"
-            >
+            <a href="#" className="flex flex-col items-center gap-2 font-medium">
               <div className="flex size-8 items-center justify-center rounded-md">
                 <Logo className="text-5xl" />
               </div>
               <span className="sr-only">Acme Inc.</span>
             </a>
-            <h1 className="text-xl font-bold">Welcome back, ready to code?</h1>
+            <h1 className="font-bold text-xl">Welcome back, ready to code?</h1>
             <FieldDescription>
               Don&apos;t have an account? <a href="/signup">Sign up</a>
             </FieldDescription>
@@ -107,7 +100,7 @@ export function LoginForm({
           </Field>
           <Field>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Sign In"}
+              {isLoading ? 'Logging in...' : 'Sign In'}
             </Button>
           </Field>
           <FieldSeparator>Or</FieldSeparator>
@@ -125,8 +118,8 @@ export function LoginForm({
         </FieldGroup>
       </form>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
+        <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
   )
