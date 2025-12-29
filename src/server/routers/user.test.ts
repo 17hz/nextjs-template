@@ -1,5 +1,5 @@
+import { describe, expect, it } from 'bun:test'
 import { call } from '@orpc/server'
-import { describe, expect, it } from 'vitest'
 import { findUser } from './user'
 
 describe('user router', () => {
@@ -8,9 +8,9 @@ describe('user router', () => {
 
   describe('findUser', () => {
     it('should find user by id', async () => {
-      const result = await call(findUser, { id: 'An1KG8fc4zKMXzNQopfszeAhRicvP85i' }, { context })
+      const result = await call(findUser, { id: 'OR8CI6GncagGK9vSiGxrsAR4HvvI66lE' }, { context })
 
-      expect(result.id).toBe('An1KG8fc4zKMXzNQopfszeAhRicvP85i')
+      expect(result.id).toBe('OR8CI6GncagGK9vSiGxrsAR4HvvI66lE')
       expect(result.name).toBe('zhaker')
     })
 
